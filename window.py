@@ -73,8 +73,7 @@ def main():
               False,
               False,
               False,
-              False,
-        ]
+              False,]
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT or check_if_true(finish):
