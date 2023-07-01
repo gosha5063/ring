@@ -1,7 +1,7 @@
 import pygame as pg
 import sys
 import serial
-
+from screeninfo import get_monitors
 
 m_soft = {1: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4],
      2: [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4],
@@ -29,8 +29,9 @@ m_hard = {1: [5,5,5,5, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4],
 imgs = [-1, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11]
 class Page:
     def __init__(self):
-        self.weigth = 2560
-        self.height = 1440
+        self.weigth, self.height = get_monitors()[0].width, get_monitors()[0].height
+        print(self.weigth,self.height)
+
         self.id = 1
     def draw(self,sc, koord, click):
         koord = min(koord,15)
@@ -41,8 +42,8 @@ class Page:
         if (map_g[self.id][koord]!=-1):
             self.id = map_g[self.id][koord]
             dog_surf = pg.image.load(f'menu_media/{str(imgs[self.id])}.png')
-            dog_rect = dog_surf.get_rect(
-            center=(self.weigth // 2, self.height // 2))
+            # dog_surf = pg.transform.scale(dog_surf,(self.weigth,self.height))
+            dog_rect = dog_surf.get_rect()
             sc.blit(dog_surf, dog_rect)
 
 
@@ -56,7 +57,7 @@ def main():
     sc.fill((0, 0, 0))
     while 1:
         line = int(my_serial.readline().decode("UTF-8"))
-        print(line)
+
         for i in pg.event.get():
             if i.type == pg.QUIT:
                 sys.exit()
@@ -68,5 +69,5 @@ def main():
         pg.display.update()
         pg.time.delay(20)
 if __name__ == '__main__':
-    my_serial = serial.Serial(port='com6', baudrate=9600)
+    my_serial = serial.Serial(port='com12   ', baudrate=9600)
     main()

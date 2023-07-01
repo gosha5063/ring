@@ -1,8 +1,12 @@
 from pynput.mouse import Controller
+import mouse as mp
 
 class Mouse():
     def __init__(self):
         self.mouse = Controller()
+
+    def set_position(self,koord, koord_finish):
+        self.mouse.move(koord_finish[0] - koord[0],koord_finish[1] - koord[1])
 
     def value_of_pos(self,koord,porog,speed):
         finish_koord = 0
