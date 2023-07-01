@@ -31,7 +31,6 @@ class Page:
     def __init__(self):
         self.weigth, self.height = get_monitors()[0].width, get_monitors()[0].height
         print(self.weigth,self.height)
-
         self.id = 1
     def draw(self,sc, koord, click):
         koord = min(koord,15)
@@ -42,7 +41,7 @@ class Page:
         if (map_g[self.id][koord]!=-1):
             self.id = map_g[self.id][koord]
             dog_surf = pg.image.load(f'menu_media/{str(imgs[self.id])}.png')
-            # dog_surf = pg.transform.scale(dog_surf,(self.weigth,self.height))
+            dog_surf = pg.transform.scale(dog_surf,(self.weigth,self.height))
             dog_rect = dog_surf.get_rect()
             sc.blit(dog_surf, dog_rect)
 
@@ -50,8 +49,7 @@ class Page:
 
 
 def main():
-    weigth = 2560
-    height = 1440
+    weigth, height = get_monitors()[0].width+100, get_monitors()[0].height+140
     Menu_Page = Page()
     sc = pg.display.set_mode((weigth, height))
     sc.fill((0, 0, 0))
